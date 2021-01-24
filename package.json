@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Nunes89/chatbotfit_for_telegram#readme",
   "dependencies": {
+    "dialogflow": "^1.2.0",
     "dotenv": "^8.2.0",
     "node-telegram-bot-api": "^0.51.0"
   }
