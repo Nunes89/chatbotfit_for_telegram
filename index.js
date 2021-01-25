@@ -1,6 +1,7 @@
 require("dotenv").config();
 const TelegramBot = require("node-telegram-bot-api");
 const dialogflow = require("./dialogflow");
+const youtube = require("./youtube");
 
 const token = process.env.BOT_TOKEN;
 
@@ -12,5 +13,13 @@ bot.on("message", async function (msg) {
 
   const dfResponse = await dialogflow.sendMessage(chatId.toString(), msg.text);
 
-  bot.sendMessage(chatId, dfResponse.text);
+  let responseText = dfResponse.text;
+  if (dfResponse.intent === "Treino específico") {
+    responseText = await youtube.searchVideoURL(
+      responseText,
+      dfResponse.fields.corpo.stringValue
+    );
+  }
+
+  bot.sendMessage(chatId, responseText);
 });
